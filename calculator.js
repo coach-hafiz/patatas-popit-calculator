@@ -11,7 +11,6 @@ function calculate() {
     return;
   }
 
-  // Calculate total number of days
   const endDate = new Date(startDate);
   endDate.setFullYear(endDate.getFullYear() + years);
   endDate.setMonth(endDate.getMonth() + months);
@@ -23,7 +22,7 @@ function calculate() {
   let dataRows = "";
 
   while (date <= endDate) {
-    const day = date.getDay(); // 0 = Sun, 6 = Sat
+    const day = date.getDay();
     if (day !== 0 && day !== 6) {
       const earning = round(balance * dailyRate, 2);
       totalEarnings = round(totalEarnings + earning, 2);
@@ -36,9 +35,9 @@ function calculate() {
         <tr>
           <td>${formatDate(date)}</td>
           <td>${getDayName(date)}</td>
-          <td>${earning}</td>
-          <td>${totalEarnings}</td>
-          <td>${balance}</td>
+          <td>${formatNum(earning)}</td>
+          <td>${formatNum(totalEarnings)}</td>
+          <td>${formatNum(balance)}</td>
           <td>${maxLotSize}</td>
           <td>${maxLayers}</td>
         </tr>
@@ -48,9 +47,9 @@ function calculate() {
   }
 
   document.getElementById("summary").innerHTML = `
-    <p><strong>Investment Value:</strong> $${balance}</p>
-    <p><strong>Total Interest / Earnings:</strong> $${totalEarnings}</p>
-    <p><strong>Percentage Profit:</strong> ${round((totalEarnings / principal) * 100, 2)}%</p>
+    <p><strong>Investment Value:</strong> $${formatNum(balance)}</p>
+    <p><strong>Total Interest / Earnings:</strong> $${formatNum(totalEarnings)}</p>
+    <p><strong>Percentage Profit:</strong> ${round((totalEarnings / principal) * 100, 2).toLocaleString()}%</p>
     <p><strong>Start Date:</strong> ${formatDate(startDate)}<br><strong>End Date:</strong> ${formatDate(endDate)}</p>
   `;
 
@@ -73,4 +72,8 @@ function formatDate(d) {
 
 function getDayName(d) {
   return d.toLocaleDateString('en-GB', { weekday: 'short' });
+}
+
+function formatNum(num) {
+  return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
