@@ -2,20 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Daily Compound Profit Calculator</title>
+  <title>Patatas Popit Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
-    h1, h2 { color: #333; }
-    label { display: block; margin-top: 10px; }
-    input, button { padding: 8px; margin-top: 5px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background: #333; color: white; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+      margin: 0;
+    }
+    h1, h2 {
+      color: #333;
+      font-size: 1.2rem;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+    input, button {
+      padding: 6px;
+      font-size: 0.9rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 10px;
+    }
+    #summary {
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: #fff;
+      font-size: 0.75rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 4px;
+      text-align: center;
+      word-break: break-word;
+    }
+    th {
+      background: #333;
+      color: white;
+      position: sticky;
+      top: 0;
+    }
+    @media (max-width: 768px) {
+      th, td {
+        font-size: 0.7rem;
+        padding: 3px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Daily Compound Profit Calculator</h1>
+  <h1>Patatas Popit Calculator</h1>
 
   <label>Principal Amount ($): <input type="number" id="principal" /></label>
   <label>Years: <input type="number" id="years" value="0" /></label>
