@@ -1,1 +1,1 @@
-# patatas-profit-calculator
+# patatas-popit-calculator
