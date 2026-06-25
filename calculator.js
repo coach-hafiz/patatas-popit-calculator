@@ -23,12 +23,13 @@ function calculate() {
 
   while (date <= endDate) {
     const day = date.getDay();
+
     if (day !== 0 && day !== 6) {
       const earning = round(balance * dailyRate, 2);
       totalEarnings = round(totalEarnings + earning, 2);
       balance = round(balance + earning, 2);
 
-      const maxLotSize = calcMaxLotSize(earning);
+      const maxLotSize = calcMaxLotSize(balance);
       const maxLayers = round(maxLotSize / 0.01, 2);
 
       dataRows += `
@@ -38,11 +39,12 @@ function calculate() {
           <td>${formatNum(earning)}</td>
           <td>${formatNum(totalEarnings)}</td>
           <td>${formatNum(balance)}</td>
-          <td>${maxLotSize}</td>
-          <td>${maxLayers}</td>
+          <td>${formatNum(maxLotSize)}</td>
+          <td>${formatNum(maxLayers)}</td>
         </tr>
       `;
     }
+
     date.setDate(date.getDate() + 1);
   }
 
@@ -61,19 +63,29 @@ function round(num, decimals = 2) {
   return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
 
-function calcMaxLotSize(earning) {
-  if (earning < 1) return 0;
-  return round(0.01 * Math.floor((earning - 1) / 3) + 0.01, 2);
+function calcMaxLotSize(balance) {
+  // 0.01% of balance = balance * 0.0001
+  // Rounded up to the nearest 0.01 lot
+  return round(Math.ceil((balance * 0.0001) / 0.01) * 0.01, 2);
 }
 
 function formatDate(d) {
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' });
+  return d.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "2-digit"
+  });
 }
 
 function getDayName(d) {
-  return d.toLocaleDateString('en-GB', { weekday: 'short' });
+  return d.toLocaleDateString("en-GB", {
+    weekday: "short"
+  });
 }
 
 function formatNum(num) {
-  return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return num.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
