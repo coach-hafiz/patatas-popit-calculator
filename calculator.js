@@ -4,7 +4,7 @@ function calculate() {
   const months = parseInt(document.getElementById("months").value || 0);
   const days = parseInt(document.getElementById("days").value || 0);
   const startDate = new Date(document.getElementById("startDate").value);
-  const dailyRate = 0.10;
+  const dailyRate = 0.20;
 
   if (!principal || isNaN(startDate.getTime())) {
     alert("Please enter a valid principal and start date.");
