@@ -6,7 +6,7 @@ function calculate() {
   const days = parseInt(document.getElementById("days").value || 0);
   const startDate = new Date(document.getElementById("startDate").value);
 
-  const dailyPips = 10;
+  const dailyPips = 30;
   const pipValue = 10;
   const reinvestRate = 0.20;
 
