@@ -1,438 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Profit Calculator</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD 30-Pip Compounding Calculator</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  margin: 0;
-  padding: 20px;
-  color: #243247;
-}
-
-.container {
-  max-width: 1300px;
-  margin: auto;
-}
-
-h1 { text-align: center; color: #17365d; }
-h2 { color: #17365d; }
-
-.subtitle {
-  text-align: center;
-  color: #64748b;
-}
-
-.card {
-  background: white;
-  padding: 22px;
-  border-radius: 12px;
-  margin: 20px 0;
-  box-shadow: 0 2px 10px #00000010;
-}
-
-.inputs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 15px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-input {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 16px;
-}
-
-button {
-  background: #1769aa;
-  color: white;
-  border: 0;
-  padding: 13px 25px;
-  margin-top: 20px;
-  border-radius: 7px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover { background: #12558a; }
-
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-}
-
-.stat {
-  background: #f1f5f9;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.stat-label {
-  color: #64748b;
-  font-size: 13px;
-  margin-bottom: 7px;
-}
-
-.stat-value {
-  font-size: 21px;
-  font-weight: bold;
-  overflow-wrap: anywhere;
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  white-space: nowrap;
-  font-size: 13px;
-}
-
-th, td {
-  padding: 11px;
-  border-bottom: 1px solid #e2e8f0;
-  text-align: right;
-}
-
-th {
-  background: #17365d;
-  color: white;
-}
-
-th:first-child, td:first-child,
-th:nth-child(2), td:nth-child(2) {
-  text-align: left;
-}
-
-tbody tr:nth-child(even) {
-  background: #f8fafc;
-}
-
-.note {
-  color: #64748b;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-@media(max-width:600px) {
-  body { padding: 10px; }
-  .card { padding: 15px; }
-}
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f3f6fa;margin:0;padding:20px;color:#243247}.container{max-width:1350px;margin:auto}h1{text-align:center;color:#17365d}.subtitle{text-align:center;color:#64748b}.card{background:white;padding:22px;border-radius:12px;margin:20px 0;box-shadow:0 2px 10px #00000010}h2{color:#17365d}.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px}label{display:block;font-weight:bold;margin-bottom:7px}input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;font-size:16px}button{background:#1769aa;color:white;border:0;padding:13px 25px;border-radius:7px;font-size:16px;margin-top:20px;cursor:pointer}button:hover{background:#12558a}.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.stat{background:#f1f5f9;padding:16px;border-radius:9px}.stat-label{color:#64748b;font-size:13px;margin-bottom:7px}.stat-value{font-size:21px;font-weight:bold;overflow-wrap:anywhere}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:13px}th,td{padding:12px;border-bottom:1px solid #e2e8f0;text-align:right}th{background:#17365d;color:white}th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}tbody tr:nth-child(even){background:#f8fafc}tbody tr:hover{background:#eaf3fc}.profit{color:#15803d;font-weight:bold}.note{font-size:13px;color:#64748b;line-height:1.6}@media(max-width:600px){body{padding:10px}.card{padding:15px}}
 </style>
 </head>
-
-<body>
-
-<div class="container">
-
-<h1>Daily Profit & Compounding Calculator</h1>
-<p class="subtitle">
-10% Daily Profit | 20% Reinvested | 80% Realised
-</p>
-
-<div class="card">
-<h2>Investment Settings</h2>
-
-<div class="inputs">
-  <div>
-    <label for="principal">Initial Balance ($)</label>
-    <input id="principal" type="number"
-           value="1000" min="0.01" step="0.01">
-  </div>
-
-  <div>
-    <label for="startDate">Start Date</label>
-    <input id="startDate" type="date">
-  </div>
-
-  <div>
-    <label for="years">Years</label>
-    <input id="years" type="number" value="0" min="0">
-  </div>
-
-  <div>
-    <label for="months">Months</label>
-    <input id="months" type="number" value="1" min="0">
-  </div>
-
-  <div>
-    <label for="days">Days</label>
-    <input id="days" type="number" value="0" min="0">
-  </div>
-</div>
-
-<button onclick="calculate()">Calculate Projection</button>
-</div>
-
-<div class="card">
-<h2>Investment Summary</h2>
-<div id="summary"></div>
-</div>
-
-<div class="card">
-<h2>Daily Breakdown</h2>
-
-<div class="table-wrap">
-<table id="breakdown">
-<thead>
-<tr>
-  <th>Date</th>
-  <th>Day</th>
-  <th>Starting Balance</th>
-  <th>Daily Profit (10%)</th>
-  <th>Reinvested (20%)</th>
-  <th>Realised (80%)</th>
-  <th>Total Realised</th>
-  <th>Closing Balance</th>
-  <th>Max Lot Size</th>
-  <th>Max Layers</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
-</div>
-
-<p class="note">
-This calculator assumes a fixed 10% profit on weekdays.
-20% of each day's profit is reinvested, while 80% is
-recorded separately as realised profit. Actual trading
-returns are not guaranteed.
-</p>
-
-</div>
-
+<body><main class="container">
+<h1>XAUUSD Daily Compounding Calculator</h1>
+<p class="subtitle">30 Pips Daily | 0.01% Lot Sizing | Daily Profits Added to Balance</p>
+<section class="card"><h2>Trading Settings</h2><div class="inputs">
+<div><label for="principal">Starting Balance ($)</label><input id="principal" type="number" value="100" min="0.01" step="0.01"></div>
+<div><label for="startDate">Start Date</label><input id="startDate" type="date"></div>
+<div><label for="years">Years</label><input id="years" type="number" value="0" min="0"></div>
+<div><label for="months">Months</label><input id="months" type="number" value="1" min="0"></div>
+<div><label for="days">Days</label><input id="days" type="number" value="0" min="0"></div>
+<div><label for="targetPips">Daily Target (Pips)</label><input id="targetPips" type="number" value="30" min="0" step="1"></div>
+</div><button type="button" onclick="calculate()">Calculate Projection</button></section>
+<section class="card"><h2>Trading Summary</h2><div id="summary" aria-live="polite"></div></section>
+<section class="card"><h2>Daily Compounding Breakdown</h2><div class="table-wrap"><table id="breakdown"><thead><tr>
+<th>Date</th><th>Day</th><th>Starting Balance ($)</th><th>Lot Size</th><th>Max Layers (0.01)</th><th>Target Pips</th><th>Daily Profit ($)</th><th>Total Profit ($)</th><th>Closing Balance ($)</th>
+</tr></thead><tbody></tbody></table></div></section>
+<p class="note">Illustrative projection only: assumes the target is met on every weekday, with no losing trades, costs, slippage or market holidays. Uses the requested convention of $0.10 per pip per 0.01 XAUUSD lot; actual broker contract and pip definitions vary. Rounding lot size upward can increase risk significantly.</p>
+</main>
 <script>
-const dailyRate = 0.10;
-const reinvestRate = 0.20;
-
-function round(num, decimals = 2) {
-  const factor = Math.pow(10, decimals);
-  return Math.round((num + Number.EPSILON) * factor) / factor;
-}
-
-function formatNum(num) {
-  return num.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-}
-
-function formatDate(date) {
-  return date.toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "2-digit"
-  });
-}
-
-function getDayName(date) {
-  return date.toLocaleDateString("en-GB", {
-    weekday: "short"
-  });
-}
-
-function calcMaxLotSize(balance) {
-  // 0.01% of account balance
-  // Rounded up to nearest 0.01 lot
-  const rawLot = balance * 0.0001;
-  return round(Math.ceil((rawLot - 1e-10) / 0.01) * 0.01, 2);
-}
-
-function calculate() {
-  const principal = parseFloat(
-    document.getElementById("principal").value
-  );
-
-  const years = Number(
-    document.getElementById("years").value || 0
-  );
-
-  const months = Number(
-    document.getElementById("months").value || 0
-  );
-
-  const days = Number(
-    document.getElementById("days").value || 0
-  );
-
-  const dateString =
-    document.getElementById("startDate").value;
-
-  if (
-    !Number.isFinite(principal) ||
-    principal <= 0 ||
-    !dateString ||
-    ![years, months, days].every(
-      n => Number.isInteger(n) && n >= 0
-    )
-  ) {
-    alert("Please enter valid investment settings.");
-    return;
+const pipValuePer001Lot=0.10;
+function round(value,places=2){const n=10**places;return Math.round((value+Number.EPSILON)*n)/n}
+function formatNum(value){return Number(value).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function formatDate(d){return d.toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"2-digit"})}
+function getDayName(d){return d.toLocaleDateString("en-GB",{weekday:"short"})}
+function calcMaxLotSize(balance){return round(Math.ceil((balance*0.0001-1e-12)/0.01)*0.01,2)}
+function calculate(){
+ const principal=Number(document.getElementById("principal").value);
+ const years=Number(document.getElementById("years").value);
+ const months=Number(document.getElementById("months").value);
+ const days=Number(document.getElementById("days").value);
+ const targetPips=Number(document.getElementById("targetPips").value);
+ const dateString=document.getElementById("startDate").value;
+ if(!dateString||!Number.isFinite(principal)||principal<=0||!Number.isFinite(targetPips)||targetPips<0||![years,months,days].every(n=>Number.isSafeInteger(n)&&n>=0)||years>100){
+  alert("Please enter a positive balance, a valid start date, non-negative duration and pip target (maximum 100 years).");return;
+ }
+ const [year,month,day]=dateString.split("-").map(Number);
+ const startDate=new Date(year,month-1,day);
+ if(startDate.getFullYear()!==year||startDate.getMonth()!==month-1||startDate.getDate()!==day){alert("Invalid start date.");return}
+ const endDate=new Date(startDate),originalDay=endDate.getDate();
+ endDate.setDate(1);endDate.setMonth(endDate.getMonth()+years*12+months);
+ const lastDay=new Date(endDate.getFullYear(),endDate.getMonth()+1,0).getDate();
+ endDate.setDate(Math.min(originalDay,lastDay));endDate.setDate(endDate.getDate()+days);
+ let currentDate=new Date(startDate),balance=principal,totalProfit=0,tradingDays=0;
+ const rows=[];
+ while(currentDate<=endDate){
+  const weekday=currentDate.getDay();
+  if(weekday!==0&&weekday!==6){
+   tradingDays++;
+   const startingBalance=balance;
+   const lotSize=calcMaxLotSize(startingBalance);
+   const maxLayers=Math.round(lotSize/0.01);
+   const dailyProfit=round(maxLayers*targetPips*pipValuePer001Lot,2);
+   balance=round(balance+dailyProfit,2);
+   totalProfit=round(totalProfit+dailyProfit,2);
+   if(!Number.isFinite(balance)){alert("Projection exceeds supported numeric range. Try a shorter duration.");return}
+   rows.push(`<tr><td>${formatDate(currentDate)}</td><td>${getDayName(currentDate)}</td><td>${formatNum(startingBalance)}</td><td>${formatNum(lotSize)}</td><td>${formatNum(maxLayers)}</td><td>${formatNum(targetPips)}</td><td class="profit">${formatNum(dailyProfit)}</td><td>${formatNum(totalProfit)}</td><td>${formatNum(balance)}</td></tr>`);
   }
-
-  // Use local date to avoid timezone errors
-  const [year, month, day] =
-    dateString.split("-").map(Number);
-
-  const startDate = new Date(year, month - 1, day);
-
-  // Calculate projection end date
-  const endDate = new Date(startDate);
-  const originalDay = endDate.getDate();
-
-  endDate.setDate(1);
-  endDate.setMonth(
-    endDate.getMonth() + years * 12 + months
-  );
-
-  const lastDay = new Date(
-    endDate.getFullYear(),
-    endDate.getMonth() + 1,
-    0
-  ).getDate();
-
-  endDate.setDate(Math.min(originalDay, lastDay));
-  endDate.setDate(endDate.getDate() + days);
-
-  let currentDate = new Date(startDate);
-  let balance = principal;
-
-  let totalEarnings = 0;
-  let totalReinvested = 0;
-  let totalRealised = 0;
-  let tradingDays = 0;
-
-  let rows = "";
-
-  while (currentDate <= endDate) {
-    const weekday = currentDate.getDay();
-
-    // Exclude Saturday and Sunday
-    if (weekday !== 0 && weekday !== 6) {
-      tradingDays++;
-
-      const startingBalance = balance;
-
-      // 10% profit on starting balance
-      const dailyProfit = round(
-        startingBalance * dailyRate, 2
-      );
-
-      // Reinvest 20% of daily profit
-      const reinvested = round(
-        dailyProfit * reinvestRate, 2
-      );
-
-      // Realise remaining 80%
-      const realised = round(
-        dailyProfit - reinvested, 2
-      );
-
-      // Increase balance by reinvested amount only
-      balance = round(balance + reinvested, 2);
-
-      totalEarnings = round(
-        totalEarnings + dailyProfit, 2
-      );
-
-      totalReinvested = round(
-        totalReinvested + reinvested, 2
-      );
-
-      totalRealised = round(
-        totalRealised + realised, 2
-      );
-
-      const maxLotSize = calcMaxLotSize(balance);
-      const maxLayers = Math.round(maxLotSize / 0.01);
-
-      rows += `
-        <tr>
-          <td>${formatDate(currentDate)}</td>
-          <td>${getDayName(currentDate)}</td>
-          <td>${formatNum(startingBalance)}</td>
-          <td>${formatNum(dailyProfit)}</td>
-          <td>${formatNum(reinvested)}</td>
-          <td>${formatNum(realised)}</td>
-          <td>${formatNum(totalRealised)}</td>
-          <td>${formatNum(balance)}</td>
-          <td>${formatNum(maxLotSize)}</td>
-          <td>${formatNum(maxLayers)}</td>
-        </tr>
-      `;
-    }
-
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  const combinedValue = round(
-    balance + totalRealised, 2
-  );
-
-  const profitPercentage = round(
-    totalEarnings / principal * 100, 2
-  );
-
-  const summaryItems = [
-    ["Initial Investment", "$" + formatNum(principal)],
-    ["Final Account Balance", "$" + formatNum(balance)],
-    ["Total Profit Generated", "$" + formatNum(totalEarnings)],
-    ["Total Reinvested (20%)", "$" + formatNum(totalReinvested)],
-    ["Total Realised (80%)", "$" + formatNum(totalRealised)],
-    ["Combined Value", "$" + formatNum(combinedValue)],
-    ["Total Profit %", formatNum(profitPercentage) + "%"],
-    ["Trading Days", tradingDays],
-    ["Start Date", formatDate(startDate)],
-    ["End Date", formatDate(endDate)]
-  ];
-
-  document.getElementById("summary").innerHTML = `
-    <div class="summary-grid">
-      ${summaryItems.map(([label, value]) => `
-        <div class="stat">
-          <div class="stat-label">${label}</div>
-          <div class="stat-value">${value}</div>
-        </div>
-      `).join("")}
-    </div>
-  `;
-
-  document.querySelector(
-    "#breakdown tbody"
-  ).innerHTML = rows;
+  currentDate.setDate(currentDate.getDate()+1);
+ }
+ const percentage=round(totalProfit/principal*100,2);
+ const stats=[["Initial Balance","$"+formatNum(principal)],["Final Balance","$"+formatNum(balance)],["Total Profit","$"+formatNum(totalProfit)],["Profit Percentage",formatNum(percentage)+"%"],["Trading Days",tradingDays],["Initial Lot Size",formatNum(calcMaxLotSize(principal))],["Final Lot Size",formatNum(calcMaxLotSize(balance))],["Daily Target",formatNum(targetPips)+" pips"],["Start Date",formatDate(startDate)],["End Date",formatDate(endDate)]];
+ document.getElementById("summary").innerHTML='<div class="summary-grid">'+stats.map(([label,value])=>`<div class="stat"><div class="stat-label">${label}</div><div class="stat-value">${value}</div></div>`).join("")+"</div>";
+ document.querySelector("#breakdown tbody").innerHTML=rows.join("");
 }
-
-// Set today's local date
-const today = new Date();
-
-document.getElementById("startDate").value = [
-  today.getFullYear(),
-  String(today.getMonth() + 1).padStart(2, "0"),
-  String(today.getDate()).padStart(2, "0")
-].join("-");
-
-// Calculate automatically on page load
+const today=new Date();document.getElementById("startDate").value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,"0"),String(today.getDate()).padStart(2,"0")].join("-");
 calculate();
-</script>
-
-</body>
-</html>
+</script></body></html>
